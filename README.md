@@ -3,8 +3,7 @@
 
 ### Features
 - add employees
-   - ID
-   - name , address , department , salary
+   - ID , name , address , department , salary
  
 - edit employees data
 - remove employeess data
