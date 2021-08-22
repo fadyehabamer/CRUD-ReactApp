@@ -6,5 +6,6 @@
    - ID
    - name
    - address
+   - department
    
 
