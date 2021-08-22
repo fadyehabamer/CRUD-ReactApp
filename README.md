@@ -4,8 +4,7 @@
 ### Features
 - add employees
    - ID
-   - name
-   - address , department , salary
+   - name , address , department , salary
  
 - edit employees data
 - remove employeess data
