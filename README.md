@@ -7,4 +7,4 @@
 - Edit employees data
 - Remove employeess data
 - Sort ascending by salary
-- filter employee's salary > 2500
+- Filter employee's salary > 2500
