@@ -2,7 +2,7 @@
 > CRUD operations made with React.js
 
 ### Features
-- add employees
+- Add employees
    - ID , name , address , department , salary
 - edit employees data
 - remove employeess data
