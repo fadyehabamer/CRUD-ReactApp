@@ -1,0 +1,90 @@
+body{
+  box-sizing: border-box;
+  background-image: url(./bck3.jpg);
+  background-size: cover;
+  background-position: center;
+}
+.App {
+  margin: auto;
+  width: 50%;
+  font-size: 20px;
+}
+
+.myForm {
+  width: 100%;
+  background-color: #dfe6e9;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.formField {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.myButton {
+  width: 100%;
+  background-color: #00b894;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.myList {
+  width: 100%;
+  list-style: none;
+  background-color: #eee;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  border-radius: 5px;
+
+}
+
+.myListButton {
+  background-color: #f4511e;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 15px 25px;
+  text-align: center;
+  font-size: 15px;
+  text-decoration: none;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+
+.green {
+  background-color: #4CAF50;
+}
+.options{
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center                                                     ;
+}
+.features {
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 15px 25px;
+  text-align: center;
+  font-size: 15px;
+  margin: 0px 12px;
+  text-decoration: none;
+  cursor: pointer;
+  margin-bottom: 30px;
+}
