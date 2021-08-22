@@ -2,3 +2,4 @@
 > CRUD operations made with React.js
 
 ### Features
+- add employees
