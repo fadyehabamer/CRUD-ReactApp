@@ -6,5 +6,5 @@
    - ID , name , address , department , salary
 - Edit employees data
 - Remove employeess data
-- sort ascending by salary
+- Sort ascending by salary
 - filter employee's salary > 2500
