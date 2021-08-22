@@ -7,5 +7,5 @@
    - name
    - address
    - department
+   - salary
    
-
