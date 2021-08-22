@@ -6,8 +6,7 @@
    - ID
    - name
    - address
-   - department
-   - salary
+   - department , salary
  
 - edit employees data
 - remove employeess data
