@@ -6,6 +6,8 @@ body{
 }
 .App {
   margin: auto;
+  background-color:rgba(216, 216, 216, 0.89);
+
   width: 50%;
   font-size: 20px;
 }
