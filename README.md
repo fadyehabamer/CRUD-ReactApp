@@ -1,5 +1,5 @@
 # CRUD React App
-> CRUD operations made with React.js
+> CRUD operations application built with React.js
 
 ### Features
 - Add employees
