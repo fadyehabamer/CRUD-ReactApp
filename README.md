@@ -12,3 +12,4 @@
 - edit employees data
 - remove employeess data
 - sort ascending by salary
+- filter employee's salary > 2500
