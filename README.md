@@ -10,3 +10,4 @@
    - salary
  
 - edit employees data
+- remove employeess data
