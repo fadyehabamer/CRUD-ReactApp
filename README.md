@@ -14,16 +14,18 @@
 Data lives in component state only, so it resets when the page reloads.
 
 ### Getting started
-Requires Node.js 14+ (verified with Node 24).
+Built with [Vite](https://vite.dev) and React 19. Requires Node.js 22.12+ (the dev server and build also run on 20.19+; the Vitest test runner needs 22.12+).
 
 ```bash
 npm install
-npm start
+npm run dev
 ```
 
 ### Scripts
 | Command | Description |
 | --- | --- |
-| `npm start` | Start the dev server on http://localhost:3000 |
-| `npm test` | Run the Jest / Testing Library tests |
+| `npm run dev` (or `npm start`) | Start the Vite dev server on http://localhost:3000 |
+| `npm test` | Run the Vitest / Testing Library tests (watch mode; `npm test -- --run` for a single run) |
+| `npm run lint` | Lint with ESLint (flat config, CRA rule set) |
 | `npm run build` | Production build into `build/` |
+| `npm run preview` | Serve the production build locally |
