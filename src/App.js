@@ -23,10 +23,16 @@ class App extends Component {
   fSubmit = (e) => {
     e.preventDefault();
 
-    let name = this.nameRef.current.value;
-    let address = this.addressRef.current.value;
-    let dept = this.deptRef.current.value;
-    let salary = this.salaryRef.current.value
+    let name = this.nameRef.current.value.trim();
+    let address = this.addressRef.current.value.trim();
+    let dept = this.deptRef.current.value.trim();
+    let salary = this.salaryRef.current.value.trim();
+
+    // ignore incomplete rows and non-numeric salaries (they break sort/filter)
+    if (!name || !address || !dept || salary === '' || isNaN(Number(salary))) {
+      return;
+    }
+    salary = Number(salary);
 
     if (this.state.act === 0) {
       //new
@@ -115,13 +121,13 @@ class App extends Component {
         </div>
 
 
-        <form ref={this.myFormRef} className="myForm">
-          <input type="text" ref={this.nameRef} placeholder="your name" className="formField" />
-          <input type="text" ref={this.addressRef} placeholder="your address" className="formField" />
-          <input type="text" ref={this.deptRef} placeholder="your department" className="formField" />
-          <input type="text" ref={this.salaryRef} placeholder="your salary" className="formField" />
+        <form ref={this.myFormRef} className="myForm" onSubmit={this.fSubmit}>
+          <input type="text" ref={this.nameRef} placeholder="your name" className="formField" required />
+          <input type="text" ref={this.addressRef} placeholder="your address" className="formField" required />
+          <input type="text" ref={this.deptRef} placeholder="your department" className="formField" required />
+          <input type="number" min="0" step="any" ref={this.salaryRef} placeholder="your salary" className="formField" required />
 
-          <button onClick={(e) => this.fSubmit(e)} className="myButton">submit </button>
+          <button type="submit" className="myButton">submit </button>
         </form>
         <pre>
           {datas.map((data, i) =>
