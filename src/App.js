@@ -16,13 +16,12 @@ class App extends Component {
     this.addressRef = React.createRef();
     this.deptRef = React.createRef();
     this.salaryRef = React.createRef();
+    this.nextId = 1;
   }
 
   fSubmit = (e) => {
     e.preventDefault();
-    console.log('try');
 
-    let datas = this.state.datas;
     let name = this.nameRef.current.value;
     let address = this.addressRef.current.value;
     let dept = this.deptRef.current.value;
@@ -31,40 +30,43 @@ class App extends Component {
     if (this.state.act === 0) {
       //new
       let data = {
-        name, address, dept, salary
+        id: this.nextId++, name, address, dept, salary
       }
-      datas.push(data);
+      this.setState((prev) => ({ datas: [...prev.datas, data] }));
     } else {
-      //update
-      let index = this.state.index;
-      datas[index].name = name;
-      datas[index].address = address;
-      datas[index].dept = dept;
-      datas[index].salary = salary;
+      //update (by id, so sorting/filtering while editing can't hit the wrong row)
+      let id = this.state.index;
+      this.setState((prev) => ({
+        datas: prev.datas.map((data) =>
+          data.id === id ? { ...data, name, address, dept, salary } : data
+        )
+      }));
     }
 
     this.setState({
-      datas: datas,
-      act: 0
+      act: 0,
+      index: ''
     });
 
     this.myFormRef.current.reset();
     this.nameRef.current.focus();
   }
 
-  fRemove = (i) => {
-    let datas = this.state.datas;
-    datas.splice(i, 1);
-    this.setState({
-      datas: datas
-    });
+  fRemove = (id) => {
+    this.setState((prev) => ({
+      datas: prev.datas.filter((data) => data.id !== id),
+      // removing any row resets the form below, so leave edit mode too;
+      // otherwise the next submit would update a row that no longer exists
+      act: 0,
+      index: ''
+    }));
 
     this.myFormRef.current.reset();
     this.nameRef.current.focus();
   }
 
-  fEdit = (i) => {
-    let data = this.state.datas[i];
+  fEdit = (id) => {
+    let data = this.state.datas.find((d) => d.id === id);
     this.nameRef.current.value = data.name;
     this.addressRef.current.value = data.address;
     this.deptRef.current.value = data.dept;
@@ -73,7 +75,7 @@ class App extends Component {
 
     this.setState({
       act: 1,
-      index: i
+      index: id
     });
 
     this.nameRef.current.focus();
@@ -81,12 +83,10 @@ class App extends Component {
 
   fsort = (e) => {
     let obj = [...this.state.datas];
-    console.log(obj)
     obj.sort((a, b) => a.salary - b.salary);
     this.setState({
       datas: obj
     });
-    console.log(obj)
   }
 
   ffilter = (e) => {
@@ -122,11 +122,11 @@ class App extends Component {
         </form>
         <pre>
           {datas.map((data, i) =>
-            <li key={i} className="myList">
+            <li key={data.id} className="myList">
               {i + 1}. {data.name} , {data.address} , {data.dept} , {data.salary}
               <div>
-                <button onClick={() => this.fRemove(i)} className="myListButton">remove </button>
-                <button onClick={() => this.fEdit(i)} className="myListButton green">edit </button>
+                <button onClick={() => this.fRemove(data.id)} className="myListButton">remove </button>
+                <button onClick={() => this.fEdit(data.id)} className="myListButton green">edit </button>
               </div>
             </li>
           )}
