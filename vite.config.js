@@ -12,4 +12,9 @@ export default defineConfig({
     // keep CRA's output folder so the Vercel project settings still match
     outDir: 'build',
   },
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './src/setupTests.js',
+  },
 });
