@@ -9,7 +9,8 @@ class App extends Component {
       title: 'React Simple CRUD Application',
       act: 0,
       index: '',
-      datas: []
+      datas: [],
+      onlyRich: false
     }
     this.myFormRef = React.createRef();
     this.nameRef = React.createRef();
@@ -89,17 +90,17 @@ class App extends Component {
     });
   }
 
+  // toggle a view filter instead of deleting everyone earning <= 2500
   ffilter = (e) => {
-    let filtered = this.state.datas.filter(high => high.salary > 2500)
-
-    this.setState({
-      datas: filtered
-    });
-
+    this.setState((prev) => ({
+      onlyRich: !prev.onlyRich
+    }));
   }
 
   render() {
-    let datas = this.state.datas;
+    let datas = this.state.onlyRich
+      ? this.state.datas.filter(high => high.salary > 2500)
+      : this.state.datas;
     return (
       <div className="App">
         <h2>{this.state.title}</h2>
@@ -107,7 +108,9 @@ class App extends Component {
         <div className="options">
 
           <button onClick={(e) => this.fsort(e)} className="features"> Sort Ascending by salary 👀 </button>
-          <button onClick={(e) => this.ffilter(e)} className="features"> filter rich Employees 🤑 </button>
+          <button onClick={(e) => this.ffilter(e)} className="features">
+            {this.state.onlyRich ? ' show all Employees ' : ' filter rich Employees 🤑 '}
+          </button>
 
         </div>
 
