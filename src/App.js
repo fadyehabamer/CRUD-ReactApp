@@ -9,92 +9,104 @@ class App extends Component {
       title: 'React Simple CRUD Application',
       act: 0,
       index: '',
-      datas: []
+      datas: [],
+      onlyRich: false
     }
+    this.myFormRef = React.createRef();
+    this.nameRef = React.createRef();
+    this.addressRef = React.createRef();
+    this.deptRef = React.createRef();
+    this.salaryRef = React.createRef();
+    this.nextId = 1;
   }
 
   fSubmit = (e) => {
     e.preventDefault();
-    console.log('try');
 
-    let datas = this.state.datas;
-    let name = this.refs.name.value;
-    let address = this.refs.address.value;
-    let dept = this.refs.dept.value;
-    let salary = this.refs.salary.value
+    let name = this.nameRef.current.value.trim();
+    let address = this.addressRef.current.value.trim();
+    let dept = this.deptRef.current.value.trim();
+    let salary = this.salaryRef.current.value.trim();
+
+    // ignore incomplete rows and non-numeric salaries (they break sort/filter)
+    if (!name || !address || !dept || salary === '' || isNaN(Number(salary))) {
+      return;
+    }
+    salary = Number(salary);
 
     if (this.state.act === 0) {
       //new
       let data = {
-        name, address, dept, salary
+        id: this.nextId++, name, address, dept, salary
       }
-      datas.push(data);
+      this.setState((prev) => ({ datas: [...prev.datas, data] }));
     } else {
-      //update
-      let index = this.state.index;
-      datas[index].name = name;
-      datas[index].address = address;
-      datas[index].dept = dept;
-      datas[index].salary = salary;
+      //update (by id, so sorting/filtering while editing can't hit the wrong row)
+      let id = this.state.index;
+      this.setState((prev) => ({
+        datas: prev.datas.map((data) =>
+          data.id === id ? { ...data, name, address, dept, salary } : data
+        )
+      }));
     }
 
     this.setState({
-      datas: datas,
-      act: 0
+      act: 0,
+      index: ''
     });
 
-    this.refs.myForm.reset();
-    this.refs.name.focus();
+    this.myFormRef.current.reset();
+    this.nameRef.current.focus();
   }
 
-  fRemove = (i) => {
-    let datas = this.state.datas;
-    datas.splice(i, 1);
-    this.setState({
-      datas: datas
-    });
+  fRemove = (id) => {
+    this.setState((prev) => ({
+      datas: prev.datas.filter((data) => data.id !== id),
+      // removing any row resets the form below, so leave edit mode too;
+      // otherwise the next submit would update a row that no longer exists
+      act: 0,
+      index: ''
+    }));
 
-    this.refs.myForm.reset();
-    this.refs.name.focus();
+    this.myFormRef.current.reset();
+    this.nameRef.current.focus();
   }
 
-  fEdit = (i) => {
-    let data = this.state.datas[i];
-    this.refs.name.value = data.name;
-    this.refs.address.value = data.address;
-    this.refs.dept.value = data.dept;
-    this.refs.salary.value = data.salary;
+  fEdit = (id) => {
+    let data = this.state.datas.find((d) => d.id === id);
+    this.nameRef.current.value = data.name;
+    this.addressRef.current.value = data.address;
+    this.deptRef.current.value = data.dept;
+    this.salaryRef.current.value = data.salary;
 
 
     this.setState({
       act: 1,
-      index: i
+      index: id
     });
 
-    this.refs.name.focus();
+    this.nameRef.current.focus();
   }
 
   fsort = (e) => {
     let obj = [...this.state.datas];
-    console.log(obj)
     obj.sort((a, b) => a.salary - b.salary);
     this.setState({
       datas: obj
     });
-    console.log(obj)
   }
 
+  // toggle a view filter instead of deleting everyone earning <= 2500
   ffilter = (e) => {
-    let filtered = this.state.datas.filter(high => high.salary > 2500)
-
-    this.setState({
-      datas: filtered
-    });
-
+    this.setState((prev) => ({
+      onlyRich: !prev.onlyRich
+    }));
   }
 
   render() {
-    let datas = this.state.datas;
+    let datas = this.state.onlyRich
+      ? this.state.datas.filter(high => high.salary > 2500)
+      : this.state.datas;
     return (
       <div className="App">
         <h2>{this.state.title}</h2>
@@ -102,30 +114,36 @@ class App extends Component {
         <div className="options">
 
           <button onClick={(e) => this.fsort(e)} className="features"> Sort Ascending by salary 👀 </button>
-          <button onClick={(e) => this.ffilter(e)} className="features"> filter rich Employees 🤑 </button>
+          <button onClick={(e) => this.ffilter(e)} className="features">
+            {this.state.onlyRich ? ' show all Employees ' : ' filter rich Employees 🤑 '}
+          </button>
 
         </div>
 
 
-        <form ref="myForm" className="myForm">
-          <input type="text" ref="name" placeholder="your name" className="formField" />
-          <input type="text" ref="address" placeholder="your address" className="formField" />
-          <input type="text" ref="dept" placeholder="your department" className="formField" />
-          <input type="text" ref="salary" placeholder="your salary" className="formField" />
+        <form ref={this.myFormRef} className="myForm" onSubmit={this.fSubmit}>
+          <label htmlFor="emp-name" className="visually-hidden">Name</label>
+          <input id="emp-name" type="text" ref={this.nameRef} placeholder="your name" className="formField" required />
+          <label htmlFor="emp-address" className="visually-hidden">Address</label>
+          <input id="emp-address" type="text" ref={this.addressRef} placeholder="your address" className="formField" required />
+          <label htmlFor="emp-dept" className="visually-hidden">Department</label>
+          <input id="emp-dept" type="text" ref={this.deptRef} placeholder="your department" className="formField" required />
+          <label htmlFor="emp-salary" className="visually-hidden">Salary</label>
+          <input id="emp-salary" type="number" min="0" step="any" ref={this.salaryRef} placeholder="your salary" className="formField" required />
 
-          <button onClick={(e) => this.fSubmit(e)} className="myButton">submit </button>
+          <button type="submit" className="myButton">submit </button>
         </form>
-        <pre>
+        <ul className="myListWrapper">
           {datas.map((data, i) =>
-            <li key={i} className="myList">
+            <li key={data.id} className="myList">
               {i + 1}. {data.name} , {data.address} , {data.dept} , {data.salary}
               <div>
-                <button onClick={() => this.fRemove(i)} className="myListButton">remove </button>
-                <button onClick={() => this.fEdit(i)} className="myListButton green">edit </button>
+                <button onClick={() => this.fRemove(data.id)} className="myListButton">remove </button>
+                <button onClick={() => this.fEdit(data.id)} className="myListButton green">edit </button>
               </div>
             </li>
           )}
-        </pre>
+        </ul>
 
       </div>
     );
