@@ -122,14 +122,18 @@ class App extends Component {
 
 
         <form ref={this.myFormRef} className="myForm" onSubmit={this.fSubmit}>
-          <input type="text" ref={this.nameRef} placeholder="your name" className="formField" required />
-          <input type="text" ref={this.addressRef} placeholder="your address" className="formField" required />
-          <input type="text" ref={this.deptRef} placeholder="your department" className="formField" required />
-          <input type="number" min="0" step="any" ref={this.salaryRef} placeholder="your salary" className="formField" required />
+          <label htmlFor="emp-name" className="visually-hidden">Name</label>
+          <input id="emp-name" type="text" ref={this.nameRef} placeholder="your name" className="formField" required />
+          <label htmlFor="emp-address" className="visually-hidden">Address</label>
+          <input id="emp-address" type="text" ref={this.addressRef} placeholder="your address" className="formField" required />
+          <label htmlFor="emp-dept" className="visually-hidden">Department</label>
+          <input id="emp-dept" type="text" ref={this.deptRef} placeholder="your department" className="formField" required />
+          <label htmlFor="emp-salary" className="visually-hidden">Salary</label>
+          <input id="emp-salary" type="number" min="0" step="any" ref={this.salaryRef} placeholder="your salary" className="formField" required />
 
           <button type="submit" className="myButton">submit </button>
         </form>
-        <pre>
+        <ul className="myListWrapper">
           {datas.map((data, i) =>
             <li key={data.id} className="myList">
               {i + 1}. {data.name} , {data.address} , {data.dept} , {data.salary}
@@ -139,7 +143,7 @@ class App extends Component {
               </div>
             </li>
           )}
-        </pre>
+        </ul>
 
       </div>
     );
