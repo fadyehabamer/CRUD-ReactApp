@@ -11,6 +11,11 @@ class App extends Component {
       index: '',
       datas: []
     }
+    this.myFormRef = React.createRef();
+    this.nameRef = React.createRef();
+    this.addressRef = React.createRef();
+    this.deptRef = React.createRef();
+    this.salaryRef = React.createRef();
   }
 
   fSubmit = (e) => {
@@ -18,10 +23,10 @@ class App extends Component {
     console.log('try');
 
     let datas = this.state.datas;
-    let name = this.refs.name.value;
-    let address = this.refs.address.value;
-    let dept = this.refs.dept.value;
-    let salary = this.refs.salary.value
+    let name = this.nameRef.current.value;
+    let address = this.addressRef.current.value;
+    let dept = this.deptRef.current.value;
+    let salary = this.salaryRef.current.value
 
     if (this.state.act === 0) {
       //new
@@ -43,8 +48,8 @@ class App extends Component {
       act: 0
     });
 
-    this.refs.myForm.reset();
-    this.refs.name.focus();
+    this.myFormRef.current.reset();
+    this.nameRef.current.focus();
   }
 
   fRemove = (i) => {
@@ -54,16 +59,16 @@ class App extends Component {
       datas: datas
     });
 
-    this.refs.myForm.reset();
-    this.refs.name.focus();
+    this.myFormRef.current.reset();
+    this.nameRef.current.focus();
   }
 
   fEdit = (i) => {
     let data = this.state.datas[i];
-    this.refs.name.value = data.name;
-    this.refs.address.value = data.address;
-    this.refs.dept.value = data.dept;
-    this.refs.salary.value = data.salary;
+    this.nameRef.current.value = data.name;
+    this.addressRef.current.value = data.address;
+    this.deptRef.current.value = data.dept;
+    this.salaryRef.current.value = data.salary;
 
 
     this.setState({
@@ -71,7 +76,7 @@ class App extends Component {
       index: i
     });
 
-    this.refs.name.focus();
+    this.nameRef.current.focus();
   }
 
   fsort = (e) => {
@@ -107,11 +112,11 @@ class App extends Component {
         </div>
 
 
-        <form ref="myForm" className="myForm">
-          <input type="text" ref="name" placeholder="your name" className="formField" />
-          <input type="text" ref="address" placeholder="your address" className="formField" />
-          <input type="text" ref="dept" placeholder="your department" className="formField" />
-          <input type="text" ref="salary" placeholder="your salary" className="formField" />
+        <form ref={this.myFormRef} className="myForm">
+          <input type="text" ref={this.nameRef} placeholder="your name" className="formField" />
+          <input type="text" ref={this.addressRef} placeholder="your address" className="formField" />
+          <input type="text" ref={this.deptRef} placeholder="your department" className="formField" />
+          <input type="text" ref={this.salaryRef} placeholder="your salary" className="formField" />
 
           <button onClick={(e) => this.fSubmit(e)} className="myButton">submit </button>
         </form>
