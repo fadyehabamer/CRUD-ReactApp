@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
@@ -17,8 +17,9 @@
   },
   "type": "module",
   "devDependencies": {
+    "@testing-library/dom": "^10.4.2",
     "@testing-library/jest-dom": "^7.0.1",
-    "@testing-library/react": "^12.1.5",
+    "@testing-library/react": "^16.3.3",
     "@testing-library/user-event": "^12.8.3",
     "@vitejs/plugin-react": "^6.1.1",
     "@vitest/eslint-plugin": "^1.6.27",
