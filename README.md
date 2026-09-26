@@ -1,4 +1,7 @@
 # CRUD React App
+
+[![CI](https://github.com/fadyehabamer/CRUD-ReactApp/actions/workflows/ci.yml/badge.svg)](https://github.com/fadyehabamer/CRUD-ReactApp/actions/workflows/ci.yml)
+
 > CRUD operations application built with React.js
 
 ### Features
